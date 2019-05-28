@@ -30,7 +30,7 @@ services:
       - PYTHONDONTWRITEBYTECODE=nothing
     working_dir: /src
     entrypoint: /bin/sh
-    command: -c "pip install .;pip install nose;cd tests;nosetests -v --nocapture;"
+    command: -c "pip install .;pip install cryptography nose;cd tests;nosetests -v --nocapture;"
     # command: -c "tail -f /dev/null;"
     # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
     networks:
