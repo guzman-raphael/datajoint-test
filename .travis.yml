@@ -6,7 +6,7 @@ matrix:
   - name: "Python 3.7 / MySQL 5.7"
     os: linux
     env:
-    - MYSQL_TAG=5.7-slim9.9 DJ_TAG=local-py3.7-alp3.9 MINIO_TAG=2019-05-14 MC_TAG=2019-05-01
+    - MYSQL_TAG=5.7-slim9.9 DJ_TAG=local-py3.7-alp3.9 MINIO_TAG=2019-05-14 MC_TAG=2019-05-01 DOCKER_CLIENT_TIMEOUT=120 COMPOSE_HTTP_TIMEOUT=120
     script:
     - docker-compose -f LNX-docker-compose.yml up --exit-code-from dj
 
