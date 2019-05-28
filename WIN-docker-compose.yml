@@ -1,0 +1,86 @@
+# docker-compose -f LNX-docker-compose.yml --env-file LNX.env pull
+# docker-compose -f LNX-docker-compose.yml --env-file LNX.env up --build --exit-code-from dj
+# docker-compose -f LNX-docker-compose.yml down
+version: '2.1'
+services:
+  dj:
+    image: raphaelguzman/datajoint:$DJ_TAG
+    # depends_on:
+    #   - minio
+    #   - mysql
+    depends_on:
+      mysql:
+        condition: service_healthy 
+      minio:
+        condition: service_healthy 
+    environment:
+      - DJ_HOST=mysql
+      - DJ_USER=root
+      - DJ_PASS=simple
+
+      - DJ_TEST_HOST=mysql
+      - DJ_TEST_USER=datajoint
+      - DJ_TEST_PASSWORD=datajoint
+
+      - S3_ENDPOINT=minio:9000
+      - S3_ACCESS_KEY=datajoint
+      - S3_SECRET_KEY=datajoint
+      - S3_BUCKET=datajoint-test
+    working_dir: c:\src
+    command: "pip install .;pip install nose;Set-Location -Path C:\src\datajoint-python\tests;nosetests -v --nocapture;"
+    # command: -c "tail -f /dev/null;"
+    # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
+    networks:
+      - main
+    volumes:
+      - .:c:\src
+    #   - /var/run/docker.sock:/docker/docker.sock
+
+  mysql:
+    image: raphaelguzman/mysql:$MYSQL_TAG
+    environment:
+      - MYSQL_ROOT_PASSWORD=simple
+    # ports:
+    #   - "3306:3306"
+    # volumes:
+    #   - ./mysql/data:/var/lib/mysql
+    networks:
+      - main
+    # command: mysqld --secure-file-priv=NULL
+    healthcheck:
+      test: C:\MySQL\bin\mysql.exe --protocol TCP -u"root" -p"$$MYSQL_ROOT_PASSWORD" -e "show databases;"
+      timeout: 20s
+      retries: 10
+
+  minio:
+    environment:
+      - MINIO_ACCESS_KEY=datajoint
+      - MINIO_SECRET_KEY=datajoint
+    image: raphaelguzman/minio:$MINIO_TAG
+    # ports:
+    #   - "9000:9000"
+    # volumes:
+    #   - ./minio/config:/root/.minio
+    #   - ./minio/data:/data
+    networks:
+      - main
+    command: server --config-dir config data
+
+  createbuckets:
+    environment:
+      - S3_ACCESS_KEY=datajoint
+      - S3_SECRET_KEY=datajoint
+      - S3_BUCKET=datajoint-test
+    image: raphaelguzman/minio-mc:$MC_TAG
+    depends_on:
+      minio:
+        condition: service_healthy 
+    networks:
+      - main
+    command: "mc config host add dj-s3 http://minio:9000 $$S3_ACCESS_KEY $$S3_SECRET_KEY;mc mb dj-s3/$$S3_BUCKET;mc policy download dj-s3/$$S3_BUCKET;while ($true) { start-sleep -seconds 60}"
+
+networks:
+  main:
+    ipam:
+      config:
+        - subnet: "172.168.1.5/24"

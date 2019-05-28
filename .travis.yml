@@ -10,17 +10,17 @@ matrix:
     script:
     - docker-compose -f LNX-docker-compose.yml up --exit-code-from dj
 
-  - name: "MySQL 5.6 / Python 3.7"
+  - name: "MySQL 5.6 / Python 3.6"
     os: linux
     env:
-    - MYSQL_TAG=5.6-slim9.9 DJ_TAG=local-py3.7-alp3.9 MINIO_TAG=2019-05-14 MC_TAG=2019-05-01
+    - MYSQL_TAG=5.6-slim9.9 DJ_TAG=local-py3.6-alp3.9 MINIO_TAG=2019-05-14 MC_TAG=2019-05-01 DOCKER_CLIENT_TIMEOUT=120 COMPOSE_HTTP_TIMEOUT=120
     script:
     - docker-compose -f LNX-docker-compose.yml up --exit-code-from dj
 
-  - name: "MySQL 5.7 / Python 3.7"
-    os: windows
-    language: shell
-    env:
-    - MYSQL_TAG=8.0-slim9.9 DJ_TAG=local-py3.6-alp3.9 MINIO_TAG=2019-05-14 MC_TAG=2019-05-01
-    script:
-    - echo $MYSQL_TAG
+  # - name: "MySQL 5.7 / Python 3.6"
+  #   os: windows
+  #   language: shell
+  #   env:
+  #   - MYSQL_TAG=5.7-nano1803 DJ_TAG=local-py3.6-nano1803 MINIO_TAG=2019-05-14-Nano1803 MC_TAG=2019-05-01-Nano1803 DOCKER_CLIENT_TIMEOUT=120 COMPOSE_HTTP_TIMEOUT=120
+  #   script:
+  #   - docker-compose -f WIN-docker-compose.yml up --exit-code-from dj
