@@ -1,10 +1,14 @@
-env:
-  matrix:
-  - MSG=Hello
-  - MSG=Goodbye
 matrix:
   include:
   - os: linux
+    env:
+    - MSG=Hello
+    script:
+    - whoami
+    - echo $MSG
+  - os: linux
+    env:
+    - MSG=Goodbye
     script:
     - whoami
     - echo $MSG
