@@ -1,3 +1,6 @@
+sudo: required
+services: 
+- docker
 matrix:
   include:
   - name: "Python 3.7 / MySQL 5.7"
