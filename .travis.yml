@@ -1,0 +1,9 @@
+env:
+  - MSG=Hello
+  - MSG=Goodbye
+matrix:
+  include:
+  - os: linux
+    script:
+    - whoami
+    - echo $MSG
