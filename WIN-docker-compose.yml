@@ -9,10 +9,10 @@ services:
     #   - minio
     #   - mysql
     depends_on:
+      - minio
+        # condition: service_healthy 
       mysql:
         condition: service_healthy 
-      minio
-        # condition: service_healthy 
     environment:
       - DJ_HOST=mysql
       - DJ_USER=root
@@ -77,7 +77,7 @@ services:
       - S3_BUCKET=datajoint-test
     image: raphaelguzman/minio-mc:$MC_TAG
     depends_on:
-      minio
+      - minio
         # condition: service_healthy 
     networks:
       - main
