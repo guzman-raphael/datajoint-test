@@ -30,8 +30,8 @@ services:
     # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
     networks:
       - main
-    # volumes:
-    #   - ${PWD}:c:/src
+    volumes:
+      - ${PWD}:c:/src
     #   - /var/run/doc%cd%ker.sock:/docker/docker.sock
 
   mysql:
