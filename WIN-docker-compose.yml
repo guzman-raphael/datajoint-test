@@ -1,6 +1,3 @@
-# docker-compose -f LNX-docker-compose.yml --env-file LNX.env pull
-# docker-compose -f LNX-docker-compose.yml --env-file LNX.env up --build --exit-code-from dj
-# docker-compose -f LNX-docker-compose.yml down
 version: '2.1'
 services:
   dj:
@@ -27,14 +24,15 @@ services:
       - S3_SECRET_KEY=datajoint
       - S3_BUCKET=datajoint-test
     working_dir: c:\src
-    command: "pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests;nosetests -v --nocapture;"
+    # command: "pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests;nosetests -v --nocapture;"
+    command: "echo yo"
     # command: -c "tail -f /dev/null;"
     # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
     networks:
       - main
     volumes:
-      - .:c:\src
-    #   - /var/run/docker.sock:/docker/docker.sock
+      - ${PWD}:c:\src
+    #   - /var/run/doc%cd%ker.sock:/docker/docker.sock
 
   mysql:
     image: raphaelguzman/mysql:$MYSQL_TAG
