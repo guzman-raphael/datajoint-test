@@ -32,4 +32,5 @@ matrix:
     before_install: 
     - choco install docker-compose
     script:
+    - echo ${PWD}
     - docker-compose -f WIN-docker-compose.yml up --exit-code-from dj
