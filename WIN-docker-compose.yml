@@ -25,7 +25,7 @@ services:
       - S3_BUCKET=datajoint-test
     # working_dir: c:/src
     # command: "pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests;nosetests -v --nocapture;"
-    # command: "echo yo"
+    command: "python --version"
     # command: -c "tail -f /dev/null;"
     # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
     networks:
@@ -45,6 +45,7 @@ services:
     networks:
       - main
     # command: mysqld --secure-file-priv=NULL
+    command: --console --skip-name-resolve --skip-grant-tables --log_syslog=0
     healthcheck:
       # test: C:\MySQL\bin\mysql.exe --protocol TCP -u"root" -p"$$MYSQL_ROOT_PASSWORD" -e "show databases;"
       test: echo hi
