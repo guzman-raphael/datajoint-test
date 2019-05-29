@@ -9,8 +9,8 @@ services:
     #   - minio
     #   - mysql
     depends_on:
-      - minio
-        # condition: service_healthy 
+      minio:
+        condition: service_healthy 
       mysql:
         condition: service_healthy 
     environment:
@@ -65,10 +65,11 @@ services:
     networks:
       - main
     command: server --config-dir config data
-    # healthcheck:
-    #   test: C:/minio/healthcheck.exe
-    #   timeout: 20s
-    #   retries: 10
+    healthcheck:
+      # test: C:/minio/healthcheck.exe
+      test: echo hello
+      timeout: 20s
+      retries: 10
 
   createbuckets:
     environment:
@@ -77,8 +78,8 @@ services:
       - S3_BUCKET=datajoint-test
     image: raphaelguzman/minio-mc:$MC_TAG
     depends_on:
-      - minio
-        # condition: service_healthy 
+      minio:
+        condition: service_healthy 
     networks:
       - main
     command: "mc config host add dj-s3 http://minio:9000 $$S3_ACCESS_KEY $$S3_SECRET_KEY;mc mb dj-s3/$$S3_BUCKET;mc policy download dj-s3/$$S3_BUCKET;while ($true) { start-sleep -seconds 60}"
