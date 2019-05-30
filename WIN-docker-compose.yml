@@ -28,7 +28,7 @@ services:
     # command: "pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests;nosetests -v --nocapture;"
     # command: "python --version;cmd /r dir /s /b"
     # command: "cmd dir /s /b"
-    command: "python --version;python --version"
+    command: python --version
     # command: "Get-ChildItem -Recurse | Select-Object -ExpandProperty FullName;gci -r | select -exp FullName"
     # command: -c "tail -f /dev/null;"
     # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
