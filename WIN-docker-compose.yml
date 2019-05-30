@@ -32,7 +32,7 @@ services:
     networks:
       - main
     volumes:
-      - ${PWD}:c:/src
+      - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
     #   - /var/run/doc%cd%ker.sock:/docker/docker.sock
 
   mysql:
