@@ -23,7 +23,7 @@ services:
       - S3_ACCESS_KEY=datajoint
       - S3_SECRET_KEY=datajoint
       - S3_BUCKET=datajoint-test
-    # working_dir: c:\src
+    working_dir: c:\src
     # user: ContainerAdministrator
     # command: "pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests;nosetests -v --nocapture;"
     # command: "python --version;cmd /r dir /s /b"
