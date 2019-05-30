@@ -5,11 +5,11 @@ services:
     # depends_on:
     #   - minio
     #   - mysql
-    # depends_on:
-    #   minio:
-    #     condition: service_healthy 
-    #   mysql:
-    #     condition: service_healthy 
+    depends_on:
+      minio:
+        condition: service_healthy 
+      mysql:
+        condition: service_healthy 
     environment:
       - DJ_HOST=mysql
       - DJ_USER=root
@@ -28,7 +28,7 @@ services:
     # command: "pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests;nosetests -v --nocapture;"
     # command: "python --version;cmd /r dir /s /b"
     # command: "cmd dir /s /b"
-    command: "python --version"
+    command: "python --version;python --version"
     # command: "Get-ChildItem -Recurse | Select-Object -ExpandProperty FullName;gci -r | select -exp FullName"
     # command: -c "tail -f /dev/null;"
     # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
@@ -82,12 +82,12 @@ services:
       - S3_SECRET_KEY=datajoint
       - S3_BUCKET=datajoint-test
     image: raphaelguzman/minio-mc:$MC_TAG
-    # depends_on:
-    #   minio:
-    #     condition: service_healthy 
+    depends_on:
+      minio:
+        condition: service_healthy 
     networks:
       - main
-    command: "Start-Sleep -s 120;mc config host add dj-s3 http://minio:9000 $$S3_ACCESS_KEY $$S3_SECRET_KEY;mc mb dj-s3/$$S3_BUCKET;mc policy download dj-s3/$$S3_BUCKET;while ($true) { start-sleep -seconds 60}"
+    command: "mc config host add dj-s3 http://minio:9000 $$S3_ACCESS_KEY $$S3_SECRET_KEY;mc mb dj-s3/$$S3_BUCKET;mc policy download dj-s3/$$S3_BUCKET;while ($true) { start-sleep -seconds 60}"
 
 networks:
   main:
