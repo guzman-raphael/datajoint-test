@@ -37,6 +37,7 @@ services:
       - main
     volumes:
       - .:/src
+      - mysql-keys:/mysql-keys
     #   - /var/run/docker.sock:/docker/docker.sock
 
   mysql:
@@ -45,7 +46,8 @@ services:
       - MYSQL_ROOT_PASSWORD=simple
     # ports:
     #   - "3306:3306"
-    # volumes:
+    volumes:
+      - mysql-keys:/var/lib/mysqlsql
     #   - ./mysql/data:/var/lib/mysql
     networks:
       - main
@@ -93,3 +95,6 @@ networks:
     ipam:
       config:
         - subnet: "172.168.1.5/24"
+
+volumes:
+  mysql-keys:
