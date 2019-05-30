@@ -32,7 +32,7 @@ services:
     networks:
       - main
     volumes:
-      - ${PWD}:c:\src
+      - ${PWD}:c:/src
     #   - /var/run/doc%cd%ker.sock:/docker/docker.sock
 
   mysql:
