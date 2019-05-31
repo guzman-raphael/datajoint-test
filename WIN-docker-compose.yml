@@ -3,7 +3,7 @@ version: '2.1'
 services:
   dj:
     image: raphaelguzman/datajoint:$DJ_TAG
-    working_dir: c:\src
+    # working_dir: c:\src
     # user: ContainerAdministrator
     # command: "cmd /s /c dir"
     command: "python --version;python --version"
