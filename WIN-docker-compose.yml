@@ -53,7 +53,7 @@ services:
     # command: "pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests;nosetests -v --nocapture;"
     # command: "python --version;cmd /r dir /s /b;python --version"
     # command: "python --version;python --version"
-    command: "cmd /s /c dir"
+    command: "python --version;python --version"
     # command: "cmd dir /s /b;python --version"
     # command: "Get-ChildItem -Recurse | Select-Object -ExpandProperty FullName;gci -r | select -exp FullName"
     # command: -c "tail -f /dev/null;"
