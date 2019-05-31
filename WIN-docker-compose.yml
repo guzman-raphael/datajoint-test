@@ -6,7 +6,7 @@ services:
     working_dir: c:\src
     user: ContainerAdministrator
     # command: "cmd /s /c dir"
-    command: "python --version;python --version;"
+    command: "python --version"
     networks:
       - main
     volumes:
