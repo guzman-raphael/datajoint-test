@@ -1,4 +1,5 @@
-version: '2.1'
+# version: '2.1'
+version: '3.4'
 services:
   dj:
     image: mcr.microsoft.com/powershell:6.2.0-nanoserver-1803
@@ -8,8 +9,8 @@ services:
     # networks:
     #   - main
     volumes:
-      # - ${PWD}:c:\src
-      - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
+      - ${PWD}:c:\src
+      # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
 
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
