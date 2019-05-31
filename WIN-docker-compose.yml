@@ -8,7 +8,7 @@ services:
     user: ContainerAdministrator
     # command: "Get-Location"
     # command: -NoLogo -NoProfile -Command "cmd dir /s /b"
-    command: cmd whoami /s
+    command: cmd /s /c whoami
     # networks:
     #   - main
     # volumes:
