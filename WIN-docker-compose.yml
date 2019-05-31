@@ -7,7 +7,7 @@ services:
     # entrypoint: pwsh.exe -NoLogo -NoProfile -Command
     user: ContainerAdministrator
     # command: "cmd dir /s /b"
-    command: ${PWD}
+    command: $${PWD}
     # networks:
     #   - main
     volumes:
