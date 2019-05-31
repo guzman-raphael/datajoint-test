@@ -5,7 +5,7 @@ services:
     image: raphaelguzman/datajoint:$DJ_TAG
     working_dir: c:\src
     user: ContainerAdministrator
-    command: "cmd /s /c dir;cmd /s /c dir;"
+    command: cmd /s /c dir
     networks:
       - main
     volumes:
