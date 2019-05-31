@@ -3,12 +3,10 @@ version: '2.1'
 services:
   dj:
     image: raphaelguzman/datajoint:$DJ_TAG
-    environment:
-      - PATH="%PATH%;c:\Python;c:\Python\scripts"
-    working_dir: c:\src
-    user: ContainerAdministrator
+    # working_dir: c:\src
+    # user: ContainerAdministrator
     # command: "cmd /s /c dir"
-    command: "python --version;python --version"
+    command: "python --version;cmd /s /c dir"
     networks:
       - main
     volumes:
