@@ -8,7 +8,7 @@ services:
     user: ContainerAdministrator
     # command: -NoLogo -NoProfile -Command "cmd dir /s /b"
     # command: cmd /s /c dir
-    command: -NoLogo -NoProfile -Command \"cmd /s /c dir\"
+    command: -NoLogo -NoProfile -Command \"cmd /s /c dir\;"
     # command: cmd /s /c echo currDir is %CD%
     # 
     networks:
