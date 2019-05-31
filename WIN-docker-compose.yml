@@ -2,13 +2,14 @@ version: '2.1'
 services:
   dj:
     image: mcr.microsoft.com/powershell:6.2.0-nanoserver-1803
-    working_dir: c:\src
+    # working_dir: c:\src
     # entrypoint: ENTRYPOINT ["pwsh.exe" , "-NoLogo", "-NoProfile", "-Command"]
     command: "cmd dir /s /b"
-    networks:
-      - main
-    # volumes:
-    #   - ${PWD}:c:\src
+    # networks:
+    #   - main
+    volumes:
+      # - ${PWD}:c:\src
+      - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
 
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
