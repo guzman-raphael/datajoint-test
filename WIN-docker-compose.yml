@@ -7,8 +7,8 @@ services:
     command: "cmd dir /s /b"
     networks:
       - main
-    volumes:
-      - ${PWD}:c:\src
+    # volumes:
+    #   - ${PWD}:c:\src
 
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
