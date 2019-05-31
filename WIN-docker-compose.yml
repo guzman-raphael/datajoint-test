@@ -6,7 +6,7 @@ services:
     # working_dir: c:\src
     # entrypoint: pwsh.exe -NoLogo -NoProfile -Command
     user: ContainerAdministrator
-    command: -NoLogo -NoProfile -Command "cmd dir /s /b;cmd whoami /s /b"
+    command: -NoLogo -NoProfile -Command "Get-Location"
     # command: Get-Location
     # networks:
     #   - main
@@ -22,6 +22,7 @@ services:
     #   - type: bind
     #     source: d:\test
     #     target: c:\directory
+
     # image: raphaelguzman/datajoint:$DJ_TAG
     # # depends_on:
     # #   - minio
