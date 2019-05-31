@@ -3,7 +3,7 @@ version: '3.4'
 services:
   dj:
     image: mcr.microsoft.com/powershell:6.2.0-nanoserver-1803
-    working_dir: c:\src
+    # working_dir: c:\src
     # entrypoint: pwsh.exe -NoLogo -NoProfile -Command
     user: ContainerAdministrator
     command: "cmd dir /s /b"
@@ -11,6 +11,7 @@ services:
     #   - main
     volumes:
       - ${PWD}:c:\src
+      # - c:\Users\travis\build\guzman-raphael\datajoint-test:c:\src
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
 
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
