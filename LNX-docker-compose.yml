@@ -4,15 +4,16 @@
 version: '2.1'
 services:
   dj:
-    image: raphaelguzman/datajoint:$DJ_TAG
+    # image: raphaelguzman/datajoint:$DJ_TAG
+    image: python:3.7-alpine3.9
     # depends_on:
     #   - minio
     #   - mysql
     depends_on:
       mysql:
         condition: service_healthy 
-      minio:
-        condition: service_healthy 
+      # minio:
+      #   condition: service_healthy 
     environment:
       - DJ_HOST=mysql
       - DJ_USER=root
@@ -30,7 +31,8 @@ services:
       - PYTHONDONTWRITEBYTECODE=nothing
     working_dir: /src
     entrypoint: /bin/sh
-    command: -c "apk add g++ openssl-dev libffi-dev;pip install cryptography nose;pip install .;cd tests;nosetests -v --nocapture;"
+    # command: -c "apk add g++ openssl-dev libffi-dev;pip install cryptography nose;pip install .;cd tests;nosetests -v --nocapture;"
+    command: -c "tail -f /dev/null"
     # command: -c "tail -f /dev/null;"
     # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
     networks:
@@ -41,13 +43,16 @@ services:
     #   - /var/run/docker.sock:/docker/docker.sock
 
   mysql:
+    # image: raphaelguzman/mysql:$MYSQL_TAG
+    build:
+      context: /github/raphael/datajoint-docker/MySQL/5.7/Slim9.9
     image: raphaelguzman/mysql:$MYSQL_TAG
     environment:
       - MYSQL_ROOT_PASSWORD=simple
     # ports:
     #   - "3306:3306"
     volumes:
-      - mysql-keys:/var/lib/mysqlsql
+      - mysql-keys:/var/lib/mysql
     #   - ./mysql/data:/var/lib/mysql
     networks:
       - main
@@ -57,38 +62,38 @@ services:
       timeout: 20s
       retries: 10
 
-  minio:
-    environment:
-      - MINIO_ACCESS_KEY=datajoint
-      - MINIO_SECRET_KEY=datajoint
-    image: raphaelguzman/minio:$MINIO_TAG
-    # ports:
-    #   - "9000:9000"
-    # volumes:
-    #   - ./minio/config:/root/.minio
-    #   - ./minio/data:/data
-    networks:
-      - main
-    command: server /data
-    healthcheck:
-      test: /usr/bin/healthcheck
-      # test: exit 1
-      timeout: 20s
-      retries: 10
+  # minio:
+  #   environment:
+  #     - MINIO_ACCESS_KEY=datajoint
+  #     - MINIO_SECRET_KEY=datajoint
+  #   image: raphaelguzman/minio:$MINIO_TAG
+  #   # ports:
+  #   #   - "9000:9000"
+  #   # volumes:
+  #   #   - ./minio/config:/root/.minio
+  #   #   - ./minio/data:/data
+  #   networks:
+  #     - main
+  #   command: server /data
+  #   healthcheck:
+  #     test: /usr/bin/healthcheck
+  #     # test: exit 1
+  #     timeout: 20s
+  #     retries: 10
 
-  createbuckets:
-    environment:
-      - S3_ACCESS_KEY=datajoint
-      - S3_SECRET_KEY=datajoint
-      - S3_BUCKET=datajoint-test
-    image: raphaelguzman/minio-mc:$MC_TAG
-    depends_on:
-      minio:
-        condition: service_healthy 
-    networks:
-      - main
-    entrypoint: /bin/sh
-    command: -c "mc config host add dj-s3 http://minio:9000 $$S3_ACCESS_KEY $$S3_SECRET_KEY;mc mb $$S3_BUCKET;mc policy download $$S3_BUCKET;tail -f /dev/null"
+  # createbuckets:
+  #   environment:
+  #     - S3_ACCESS_KEY=datajoint
+  #     - S3_SECRET_KEY=datajoint
+  #     - S3_BUCKET=datajoint-test
+  #   image: raphaelguzman/minio-mc:$MC_TAG
+  #   depends_on:
+  #     minio:
+  #       condition: service_healthy 
+  #   networks:
+  #     - main
+  #   entrypoint: /bin/sh
+  #   command: -c "mc config host add dj-s3 http://minio:9000 $$S3_ACCESS_KEY $$S3_SECRET_KEY;mc mb $$S3_BUCKET;mc policy download $$S3_BUCKET;tail -f /dev/null"
 
 networks:
   main:
