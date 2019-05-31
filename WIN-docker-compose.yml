@@ -9,9 +9,11 @@ services:
     # command: "Get-Location"
     # command: -NoLogo -NoProfile -Command "cmd dir /s /b"
     # command: whoami
+    command: cmd /s /c whoami
     # command: cmd /s /c dir
-    command: pwsh -NoLogo -NoProfile -Command \"cmd /s /c echo currDir is %CD%\"
     # command: cmd /s /c echo currDir is %CD%
+    # command: pwsh -NoLogo -NoProfile -Command \"cmd /s /c echo currDir is %CD%\"
+    # 
     # networks:
     #   - main
     # volumes:
