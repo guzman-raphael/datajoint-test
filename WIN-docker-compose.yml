@@ -2,111 +2,96 @@ version: '2.1'
 # version: '3.4'
 services:
   dj:
-    # image: mcr.microsoft.com/powershell:6.2.0-nanoserver-1803
+    image: mcr.microsoft.com/powershell:6.2.0-nanoserver-1803
+    working_dir: c:\src
+    user: ContainerAdministrator
+    command: cmd /s /c dir
+    networks:
+      - main
+    volumes:
+      - ${PWD}:c:\src
+
+    # image: raphaelguzman/datajoint:$DJ_TAG
+    # # depends_on:
+    # #   - minio
+    # #   - mysql
+    # depends_on:
+    #   minio:
+    #     condition: service_healthy 
+    #   mysql:
+    #     condition: service_healthy 
+    # environment:
+    #   - DJ_HOST=mysql
+    #   - DJ_USER=root
+    #   - DJ_PASS=simple
+
+    #   - DJ_TEST_HOST=mysql
+    #   - DJ_TEST_USER=datajoint
+    #   - DJ_TEST_PASSWORD=datajoint
+
+    #   - S3_ENDPOINT=minio:9000
+    #   - S3_ACCESS_KEY=datajoint
+    #   - S3_SECRET_KEY=datajoint
+    #   - S3_BUCKET=datajoint-test
     # working_dir: c:\src
-    # entrypoint: pwsh.exe 
     # user: ContainerAdministrator
-    # # command: -NoLogo -NoProfile -Command "cmd dir /s /b"
-    # # command: cmd /s /c dir
-    # command: -NoLogo -NoProfile -Command cmd /s /c dir
-    # # command: cmd /s /c echo currDir is %CD%
-    # # 
+    # # command: "pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests;nosetests -v --nocapture;"
+    # # command: "python --version;cmd /r dir /s /b;python --version"
+    # # command: "python --version;python --version"
+    # command: "Get-Location"
+    # # command: "python --version;pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests"
+    # # command: "cmd dir /s /b;python --version"
+    # # command: "Get-ChildItem -Recurse | Select-Object -ExpandProperty FullName;gci -r | select -exp FullName"
+    # # command: -c "tail -f /dev/null;"
+    # # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
     # networks:
     #   - main
     # volumes:
     #   - ${PWD}:c:\src
-    #   # - c:\Users\travis\build\guzman-raphael\datajoint-test:c:\src
-    #   # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
-
     #   # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
     #   # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
-    # #   - /var/run/docker.sock:/docker/docker.sock
+    # #   - /var/run/doc%cd%ker.sock:/docker/docker.sock
     # # volumes:
     # #   - type: bind
     # #     source: d:\test
     # #     target: c:\directory
 
-    image: raphaelguzman/datajoint:$DJ_TAG
-    # depends_on:
-    #   - minio
-    #   - mysql
-    depends_on:
-      minio:
-        condition: service_healthy 
-      mysql:
-        condition: service_healthy 
-    environment:
-      - DJ_HOST=mysql
-      - DJ_USER=root
-      - DJ_PASS=simple
+  # mysql:
+  #   image: raphaelguzman/mysql:$MYSQL_TAG
+  #   environment:
+  #     - MYSQL_ROOT_PASSWORD=simple
+  #   # ports:
+  #   #   - "3306:3306"
+  #   # volumes:
+  #   #   - ./mysql/data:/var/lib/mysql
+  #   networks:
+  #     - main
+  #   # command: mysqld --secure-file-priv=NULL
+  #   command: --console --skip-name-resolve --skip-grant-tables --log_syslog=0
+  #   healthcheck:
+  #     # test: C:\MySQL\bin\mysql.exe --protocol TCP -u"root" -p"$$MYSQL_ROOT_PASSWORD" -e "show databases;"
+  #     test: echo hi
+  #     timeout: 20s
+  #     retries: 10
 
-      - DJ_TEST_HOST=mysql
-      - DJ_TEST_USER=datajoint
-      - DJ_TEST_PASSWORD=datajoint
-
-      - S3_ENDPOINT=minio:9000
-      - S3_ACCESS_KEY=datajoint
-      - S3_SECRET_KEY=datajoint
-      - S3_BUCKET=datajoint-test
-    working_dir: c:\src
-    user: ContainerAdministrator
-    # command: "pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests;nosetests -v --nocapture;"
-    # command: "python --version;cmd /r dir /s /b;python --version"
-    # command: "python --version;python --version"
-    command: "Get-Location"
-    # command: "python --version;pip install .;pip install nose;Set-Location -Path C:\\src\\datajoint-python\\tests"
-    # command: "cmd dir /s /b;python --version"
-    # command: "Get-ChildItem -Recurse | Select-Object -ExpandProperty FullName;gci -r | select -exp FullName"
-    # command: -c "tail -f /dev/null;"
-    # curl -s --unix-socket /docker/docker.sock http://docker/containers/d8613b349010/json | jq .State.Health.Status
-    networks:
-      - main
-    volumes:
-      - ${PWD}:c:\src
-      # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
-      # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
-    #   - /var/run/doc%cd%ker.sock:/docker/docker.sock
-    # volumes:
-    #   - type: bind
-    #     source: d:\test
-    #     target: c:\directory
-
-  mysql:
-    image: raphaelguzman/mysql:$MYSQL_TAG
-    environment:
-      - MYSQL_ROOT_PASSWORD=simple
-    # ports:
-    #   - "3306:3306"
-    # volumes:
-    #   - ./mysql/data:/var/lib/mysql
-    networks:
-      - main
-    # command: mysqld --secure-file-priv=NULL
-    command: --console --skip-name-resolve --skip-grant-tables --log_syslog=0
-    healthcheck:
-      # test: C:\MySQL\bin\mysql.exe --protocol TCP -u"root" -p"$$MYSQL_ROOT_PASSWORD" -e "show databases;"
-      test: echo hi
-      timeout: 20s
-      retries: 10
-
-  minio:
-    environment:
-      - MINIO_ACCESS_KEY=datajoint
-      - MINIO_SECRET_KEY=datajoint
-    image: raphaelguzman/minio:$MINIO_TAG
-    # ports:
-    #   - "9000:9000"
-    # volumes:
-    #   - ./minio/config:/root/.minio
-    #   - ./minio/data:/data
-    networks:
-      - main
-    command: server --config-dir config data
-    healthcheck:
-      # test: C:/minio/healthcheck.exe
-      test: echo hello
-      timeout: 20s
-      retries: 10
+  # minio:
+  #   environment:
+  #     - MINIO_ACCESS_KEY=datajoint
+  #     - MINIO_SECRET_KEY=datajoint
+  #   image: raphaelguzman/minio:$MINIO_TAG
+  #   # ports:
+  #   #   - "9000:9000"
+  #   # volumes:
+  #   #   - ./minio/config:/root/.minio
+  #   #   - ./minio/data:/data
+  #   networks:
+  #     - main
+  #   command: server --config-dir config data
+  #   healthcheck:
+  #     # test: C:/minio/healthcheck.exe
+  #     test: echo hello
+  #     timeout: 20s
+  #     retries: 10
 
   # createbuckets:
   #   environment:
