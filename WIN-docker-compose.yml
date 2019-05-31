@@ -10,8 +10,8 @@ services:
     command: cmd /s /c dir
     # command: cmd /s /c echo currDir is %CD%
     # 
-    # networks:
-    #   - main
+    networks:
+      - main
     volumes:
       - ${PWD}:c:\src
       # - c:\Users\travis\build\guzman-raphael\datajoint-test:c:\src
