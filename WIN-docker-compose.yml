@@ -5,7 +5,7 @@ services:
     image: mcr.microsoft.com/powershell:6.2.0-nanoserver-1803
     working_dir: c:\src
     # entrypoint: pwsh.exe
-    user: ContainerAdministrator
+    # user: ContainerAdministrator
     # command: -NoLogo -NoProfile -Command "cmd dir /s /b"
     command: cmd /s /c dir
     # command: cmd /s /c echo currDir is %CD%
