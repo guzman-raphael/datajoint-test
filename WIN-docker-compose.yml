@@ -3,15 +3,15 @@ version: '3.4'
 services:
   dj:
     image: mcr.microsoft.com/powershell:6.2.0-nanoserver-1803
-    # working_dir: c:\src
+    working_dir: c:\src
     # entrypoint: pwsh.exe
     user: ContainerAdministrator
     # command: "Get-Location"
     # command: -NoLogo -NoProfile -Command "cmd dir /s /b"
     # command: whoami
-    command: cmd /s /c whoami
+    # command: cmd /s /c whoami
     # command: cmd /s /c dir
-    # command: cmd /s /c echo currDir is %CD%
+    command: cmd /s /c echo currDir is %CD%
     # command: pwsh -NoLogo -NoProfile -Command \"cmd /s /c echo currDir is %CD%\"
     # 
     # networks:
