@@ -4,11 +4,11 @@ services:
   dj:
     image: mcr.microsoft.com/powershell:6.2.0-nanoserver-1803
     working_dir: c:\src
-    # entrypoint: pwsh.exe
+    entrypoint: pwsh.exe -NoLogo -NoProfile -Command
     user: ContainerAdministrator
     # command: -NoLogo -NoProfile -Command "cmd dir /s /b"
     # command: cmd /s /c dir
-    command: -NoLogo -NoProfile -Command cmd /s /c dir;cmd /s /c dir
+    command: cmd /s /c dir;cmd /s /c dir
     # command: cmd /s /c echo currDir is %CD%
     # 
     networks:
@@ -20,7 +20,7 @@ services:
 
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
       # - /c/Users/travis/build/guzman-raphael/datajoint-test:/c/src
-    #   - /var/run/doc%cd%ker.sock:/docker/docker.sock
+    #   - /var/run/docker.sock:/docker/docker.sock
     # volumes:
     #   - type: bind
     #     source: d:\test
