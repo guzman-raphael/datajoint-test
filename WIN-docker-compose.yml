@@ -7,7 +7,6 @@ services:
     # user: ContainerAdministrator
     # command: "cmd /s /c dir"
     command: "python --version;python --version"
-    
     networks:
       - main
     volumes:
